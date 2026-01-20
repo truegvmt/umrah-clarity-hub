@@ -1,0 +1,157 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* UmrahOps Design System - Teal/Professional Theme */
+
+@layer base {
+  :root {
+    --background: 180 20% 99%;
+    --foreground: 180 10% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 180 10% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 180 10% 10%;
+
+    --primary: 174 72% 30%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 180 15% 95%;
+    --secondary-foreground: 180 10% 10%;
+
+    --muted: 180 10% 94%;
+    --muted-foreground: 180 5% 45%;
+
+    --accent: 174 50% 92%;
+    --accent-foreground: 174 72% 25%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 180 15% 85%;
+    --input: 180 15% 85%;
+    --ring: 174 72% 30%;
+
+    --radius: 0.25rem;
+
+    --sidebar-background: 180 15% 97%;
+    --sidebar-foreground: 180 10% 10%;
+    --sidebar-primary: 174 72% 30%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 174 50% 92%;
+    --sidebar-accent-foreground: 174 72% 25%;
+    --sidebar-border: 180 15% 85%;
+    --sidebar-ring: 174 72% 30%;
+
+    --chart-1: 174 72% 40%;
+    --chart-2: 180 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+
+    --font-sans: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+    --font-serif: 'Lora', ui-serif, Georgia, serif;
+    --font-mono: 'Space Mono', ui-monospace, monospace;
+    --font-urdu: 'Noto Nastaliq Urdu', serif;
+
+    --shadow-2xs: 1px 1px 0px 0px hsl(174 72% 30% / 0.15);
+    --shadow-xs: 2px 2px 0px 0px hsl(174 72% 30% / 0.15);
+    --shadow-sm: 3px 3px 0px 0px hsl(174 72% 30% / 0.15);
+    --shadow: 4px 4px 0px 0px hsl(174 72% 30% / 0.15);
+    --shadow-md: 6px 6px 0px 0px hsl(174 72% 30% / 0.15);
+    --shadow-lg: 8px 8px 0px 0px hsl(174 72% 30% / 0.15);
+    --shadow-xl: 12px 12px 0px 0px hsl(174 72% 30% / 0.15);
+    --shadow-2xl: 16px 16px 0px 0px hsl(174 72% 30% / 0.15);
+
+    --transition-base: all 0.2s ease-out;
+  }
+
+  .dark {
+    --background: 180 10% 5%;
+    --foreground: 180 10% 95%;
+
+    --card: 180 10% 8%;
+    --card-foreground: 180 10% 95%;
+
+    --popover: 180 10% 8%;
+    --popover-foreground: 180 10% 95%;
+
+    --primary: 174 60% 45%;
+    --primary-foreground: 180 10% 5%;
+
+    --secondary: 180 10% 15%;
+    --secondary-foreground: 180 10% 95%;
+
+    --muted: 180 10% 15%;
+    --muted-foreground: 180 5% 60%;
+
+    --accent: 174 40% 18%;
+    --accent-foreground: 174 60% 70%;
+
+    --destructive: 0 62% 40%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 180 10% 20%;
+    --input: 180 10% 20%;
+    --ring: 174 60% 45%;
+
+    --sidebar-background: 180 10% 6%;
+    --sidebar-foreground: 180 10% 95%;
+    --sidebar-primary: 174 60% 45%;
+    --sidebar-primary-foreground: 180 10% 5%;
+    --sidebar-accent: 174 40% 18%;
+    --sidebar-accent-foreground: 174 60% 70%;
+    --sidebar-border: 180 10% 20%;
+    --sidebar-ring: 174 60% 45%;
+
+    --chart-1: 174 60% 50%;
+    --chart-2: 180 50% 45%;
+    --chart-3: 190 45% 40%;
+    --chart-4: 43 70% 50%;
+    --chart-5: 27 80% 55%;
+
+    --shadow-2xs: 1px 1px 0px 0px hsl(174 60% 45% / 0.2);
+    --shadow-xs: 2px 2px 0px 0px hsl(174 60% 45% / 0.2);
+    --shadow-sm: 3px 3px 0px 0px hsl(174 60% 45% / 0.2);
+    --shadow: 4px 4px 0px 0px hsl(174 60% 45% / 0.2);
+    --shadow-md: 6px 6px 0px 0px hsl(174 60% 45% / 0.2);
+    --shadow-lg: 8px 8px 0px 0px hsl(174 60% 45% / 0.2);
+    --shadow-xl: 12px 12px 0px 0px hsl(174 60% 45% / 0.2);
+    --shadow-2xl: 16px 16px 0px 0px hsl(174 60% 45% / 0.2);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    transition: var(--transition-base);
+  }
+
+  html[dir="rtl"] body {
+    font-family: var(--font-urdu);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .hover-lift {
+    @apply transition-transform duration-200;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+  }
+}

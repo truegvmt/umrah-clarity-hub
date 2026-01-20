@@ -1,0 +1,18 @@
+{
+  "name": "UmrahOps",
+  "short_name": "UmrahOps",
+  "description": "Local-first PWA for Umrah travel agents—upload, validate, manage, and export pilgrim data securely offline.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fafcfc",
+  "theme_color": "#0f766e",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["business", "productivity", "travel"]
+}
