@@ -89,6 +89,8 @@ const translations: Record<Language, Record<string, string>> = {
     'auth.password': 'Password',
     'auth.account': 'My Account',
     'auth.signOut': 'Sign Out',
+    'auth.loginDescription': 'Enter your credentials to access your dashboard',
+    'auth.signupDescription': 'Create an account to start managing your groups',
     
     // Dashboard
     'dashboard.title': 'Dashboard',
@@ -287,6 +289,8 @@ const translations: Record<Language, Record<string, string>> = {
     'auth.password': 'پاس ورڈ',
     'auth.account': 'میرا اکاؤنٹ',
     'auth.signOut': 'سائن آؤٹ',
+    'auth.loginDescription': 'اپنے ڈیش بورڈ تک رسائی کے لیے اپنی اسناد درج کریں',
+    'auth.signupDescription': 'اپنے گروپس کا انتظام شروع کرنے کے لیے اکاؤنٹ بنائیں',
     
     // Dashboard
     'dashboard.title': 'ڈیش بورڈ',
