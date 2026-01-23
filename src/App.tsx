@@ -10,6 +10,7 @@ import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import GroupDetail from "./pages/GroupDetail";
+import AuditLog from "./pages/AuditLog";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -38,6 +39,14 @@ const App = () => (
                   element={
                     <ProtectedRoute>
                       <GroupDetail />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/audit"
+                  element={
+                    <ProtectedRoute>
+                      <AuditLog />
                     </ProtectedRoute>
                   }
                 />
