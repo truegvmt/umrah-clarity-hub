@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -95,6 +95,11 @@ export const AuthDialog = ({ open, onOpenChange, onSuccess }: AuthDialogProps) =
           <DialogTitle className="text-center text-2xl font-bold">
             {activeTab === 'login' ? t('hero.logIn') : t('hero.signUp')}
           </DialogTitle>
+          <DialogDescription className="text-center text-muted-foreground">
+            {activeTab === 'login' 
+              ? t('auth.loginDescription') 
+              : t('auth.signupDescription')}
+          </DialogDescription>
         </DialogHeader>
 
         <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">

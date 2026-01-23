@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Sun, Moon, Globe, Search, LogOut, User, LayoutGrid, Table } from 'lucide-react';
+import { Sun, Moon, Globe, Search, LogOut, User, LayoutGrid, Table, History } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -134,6 +134,10 @@ export const DashboardTopBar = ({
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => navigate('/audit')}>
+                <History className={`h-4 w-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+                <span>{t('audit.title')}</span>
+              </DropdownMenuItem>
               <DropdownMenuItem onClick={handleLogout} disabled={loggingOut}>
                 <LogOut className={`h-4 w-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
                 <span>{t('auth.signOut')}</span>
