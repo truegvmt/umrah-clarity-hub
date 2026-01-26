@@ -7,6 +7,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useNotifications } from '@/hooks/useNotifications';
+import { CSVUpload } from '@/components/group-detail/CSVUpload';
 import type { Traveler } from '@/services/dbService';
 import type { RiskAssessment } from '@/services/aiService';
 import { aiService } from '@/services/aiService';
@@ -16,15 +18,18 @@ interface TravelersTabProps {
   riskAssessments: RiskAssessment[];
   onUpdateTraveler: (travelerId: string, updates: Partial<Traveler>) => Promise<void>;
   onBatchUpdate: (updates: { id: string; changes: Partial<Traveler> }[]) => Promise<void>;
+  onImportTravelers?: (travelers: Omit<Traveler, 'id'>[]) => Promise<void>;
 }
 
 export const TravelersTab = ({ 
   travelers, 
   riskAssessments, 
   onUpdateTraveler,
-  onBatchUpdate 
+  onBatchUpdate,
+  onImportTravelers
 }: TravelersTabProps) => {
   const { t, isRTL, language } = useLanguage();
+  const { notify } = useNotifications();
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<Partial<Traveler>>({});
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
@@ -47,7 +52,9 @@ export const TravelersTab = ({
   };
 
   const saveEdit = async (travelerId: string) => {
+    const traveler = travelers.find(t => t.id === travelerId);
     await onUpdateTraveler(travelerId, editForm);
+    notify('traveler_updated', { travelerName: traveler?.name || editForm.name });
     setEditingId(null);
     setEditForm({});
   };
@@ -76,11 +83,43 @@ export const TravelersTab = ({
       changes: { bookingConfirmed: true },
     }));
     await onBatchUpdate(updates);
+    notify('booking_confirmed', { count: selectedIds.size });
     setSelectedIds(new Set());
   };
 
+  const handleCheckboxChange = async (
+    travelerId: string, 
+    field: 'bookingConfirmed' | 'paperworkComplete' | 'messageSent', 
+    checked: boolean
+  ) => {
+    const traveler = travelers.find(t => t.id === travelerId);
+    await onUpdateTraveler(travelerId, { [field]: checked });
+    
+    if (checked) {
+      if (field === 'bookingConfirmed') {
+        notify('booking_confirmed', { travelerName: traveler?.name });
+      } else if (field === 'paperworkComplete') {
+        notify('paperwork_complete', { travelerName: traveler?.name });
+      } else if (field === 'messageSent') {
+        notify('message_sent', { travelerName: traveler?.name });
+      }
+    }
+  };
+
+  const handleCSVImport = async (newTravelers: Omit<Traveler, 'id'>[]) => {
+    if (onImportTravelers) {
+      await onImportTravelers(newTravelers);
+      notify('csv_imported', { count: newTravelers.length });
+    }
+  };
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
+      {/* CSV Upload Section */}
+      {onImportTravelers && (
+        <CSVUpload onImport={handleCSVImport} />
+      )}
+
       {/* Bulk actions */}
       {selectedIds.size > 0 && (
         <div className={`flex items-center gap-2 p-3 bg-muted rounded-lg ${isRTL ? 'flex-row-reverse' : ''}`}>
@@ -151,7 +190,7 @@ export const TravelersTab = ({
                     <Checkbox
                       checked={traveler.bookingConfirmed}
                       onCheckedChange={checked => 
-                        onUpdateTraveler(traveler.id, { bookingConfirmed: !!checked })
+                        handleCheckboxChange(traveler.id, 'bookingConfirmed', !!checked)
                       }
                     />
                   </TableCell>
@@ -159,7 +198,7 @@ export const TravelersTab = ({
                     <Checkbox
                       checked={traveler.paperworkComplete}
                       onCheckedChange={checked => 
-                        onUpdateTraveler(traveler.id, { paperworkComplete: !!checked })
+                        handleCheckboxChange(traveler.id, 'paperworkComplete', !!checked)
                       }
                     />
                   </TableCell>
@@ -167,7 +206,7 @@ export const TravelersTab = ({
                     <Checkbox
                       checked={traveler.messageSent}
                       onCheckedChange={checked => 
-                        onUpdateTraveler(traveler.id, { messageSent: !!checked })
+                        handleCheckboxChange(traveler.id, 'messageSent', !!checked)
                       }
                     />
                   </TableCell>

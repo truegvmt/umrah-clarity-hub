@@ -13,7 +13,7 @@ import { ExportTab } from '@/components/group-detail/ExportTab';
 const GroupDetail = () => {
   const { id } = useParams();
   const { t, isRTL } = useLanguage();
-  const { group, loading, error, riskAssessments, updateTraveler, batchUpdateTravelers } = useGroup(id);
+  const { group, loading, error, riskAssessments, updateTraveler, batchUpdateTravelers, importTravelers } = useGroup(id);
 
   if (loading) {
     return (
@@ -51,6 +51,7 @@ const GroupDetail = () => {
               riskAssessments={riskAssessments}
               onUpdateTraveler={updateTraveler}
               onBatchUpdate={batchUpdateTravelers}
+              onImportTravelers={importTravelers}
             />
           </TabsContent>
 
