@@ -13,6 +13,7 @@ interface UseGroupResult {
   refetch: () => Promise<void>;
   updateTraveler: (travelerId: string, updates: Partial<Group['travelers'][0]>) => Promise<void>;
   batchUpdateTravelers: (updates: { id: string; changes: Partial<Group['travelers'][0]> }[]) => Promise<void>;
+  importTravelers: (newTravelers: Omit<Group['travelers'][0], 'id'>[]) => Promise<void>;
 }
 
 export const useGroup = (groupId: string | undefined, agentId: string = 'agent-1'): UseGroupResult => {
@@ -119,6 +120,37 @@ export const useGroup = (groupId: string | undefined, agentId: string = 'agent-1
     }
   }, [group, agentId]);
 
+  const importTravelers = useCallback(async (
+    newTravelers: Omit<Group['travelers'][0], 'id'>[]
+  ) => {
+    if (!group) return;
+
+    const travelersWithIds = newTravelers.map((t, index) => ({
+      ...t,
+      id: `t-${Date.now()}-${index}`,
+    }));
+
+    const updatedTravelers = [...group.travelers, ...travelersWithIds];
+
+    const updatedGroup = await dbService.updateGroup(group.id, {
+      travelers: updatedTravelers,
+    });
+
+    if (updatedGroup) {
+      setGroup(updatedGroup);
+      
+      // Log import
+      auditService.logAction('travelers_imported', agentId, {
+        groupId: group.id,
+        importCount: newTravelers.length,
+      });
+
+      // Assess risks for new travelers
+      const assessments = await aiService.batchAssessRisk(updatedTravelers);
+      setRiskAssessments(assessments);
+    }
+  }, [group, agentId]);
+
   useEffect(() => {
     fetchGroup();
   }, [fetchGroup]);
@@ -131,5 +163,6 @@ export const useGroup = (groupId: string | undefined, agentId: string = 'agent-1
     refetch: fetchGroup,
     updateTraveler,
     batchUpdateTravelers,
+    importTravelers,
   };
 };

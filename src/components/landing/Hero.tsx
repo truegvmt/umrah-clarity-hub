@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { AuthDialog } from '@/components/auth/AuthDialog';
+import { DemoWalkthrough, DemoButton } from '@/components/demo/DemoWalkthrough';
 import heroPattern from '@/assets/hero-pattern.jpg';
 
 export const Hero = () => {
@@ -12,6 +13,7 @@ export const Hero = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [authDialogOpen, setAuthDialogOpen] = useState(false);
+  const [demoOpen, setDemoOpen] = useState(false);
 
   const handleGetStarted = () => {
     if (user) {
@@ -48,10 +50,11 @@ export const Hero = () => {
             </p>
 
             <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 mb-6 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
-              <Button size="lg" className="group min-w-[200px]" onClick={handleGetStarted}>
+              <Button size="lg" className="group min-w-[200px] hero-cta" onClick={handleGetStarted}>
                 {t('hero.cta')}
                 <ArrowRight className={`h-4 w-4 transition-transform group-hover:translate-x-1 ${isRTL ? 'rotate-180 mr-2 group-hover:-translate-x-1' : 'ml-2'}`} />
               </Button>
+              <DemoButton onClick={() => setDemoOpen(true)} />
             </div>
 
             <div className={`flex items-center justify-center gap-2 text-sm text-muted-foreground ${isRTL ? 'flex-row-reverse' : ''}`}>
@@ -69,6 +72,11 @@ export const Hero = () => {
         open={authDialogOpen} 
         onOpenChange={setAuthDialogOpen} 
         onSuccess={() => navigate('/dashboard')}
+      />
+
+      <DemoWalkthrough 
+        isOpen={demoOpen} 
+        onClose={() => setDemoOpen(false)} 
       />
     </>
   );

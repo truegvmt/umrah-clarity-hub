@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Sun, Moon, Globe, Search, LogOut, User, LayoutGrid, Table, History } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Sun, Moon, Globe, Search, LogOut, User, LayoutGrid, Table, History, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -14,7 +15,6 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { auditService } from '@/services/auditService';
-import { useNavigate } from 'react-router-dom';
 
 interface DashboardTopBarProps {
   searchQuery: string;
@@ -134,6 +134,10 @@ export const DashboardTopBar = ({
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => navigate('/settings')}>
+                <Settings className={`h-4 w-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+                <span>{t('settings.title')}</span>
+              </DropdownMenuItem>
               <DropdownMenuItem onClick={() => navigate('/audit')}>
                 <History className={`h-4 w-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
                 <span>{t('audit.title')}</span>
