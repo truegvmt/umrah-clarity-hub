@@ -1,19 +1,20 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Shield } from 'lucide-react';
+import { ArrowRight, Shield, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
+import { useDemo } from '@/contexts/DemoContext';
 import { AuthDialog } from '@/components/auth/AuthDialog';
-import { DemoWalkthrough, DemoButton } from '@/components/demo/DemoWalkthrough';
+import { DemoOverlay } from '@/components/demo/DemoOverlay';
 import heroPattern from '@/assets/hero-pattern.jpg';
 
 export const Hero = () => {
-  const { t, isRTL } = useLanguage();
+  const { t, isRTL, language } = useLanguage();
   const { user } = useAuth();
+  const { startDemo, isDemoMode } = useDemo();
   const navigate = useNavigate();
   const [authDialogOpen, setAuthDialogOpen] = useState(false);
-  const [demoOpen, setDemoOpen] = useState(false);
 
   const handleGetStarted = () => {
     if (user) {
@@ -54,7 +55,15 @@ export const Hero = () => {
                 {t('hero.cta')}
                 <ArrowRight className={`h-4 w-4 transition-transform group-hover:translate-x-1 ${isRTL ? 'rotate-180 mr-2 group-hover:-translate-x-1' : 'ml-2'}`} />
               </Button>
-              <DemoButton onClick={() => setDemoOpen(true)} />
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={startDemo}
+                className={`group min-w-[160px] border-primary/30 hover:border-primary hover:bg-primary/5 ${isRTL ? 'flex-row-reverse' : ''}`}
+              >
+                <Play className={`h-4 w-4 transition-transform group-hover:scale-110 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+                {language === 'ur' ? 'انٹرایکٹو ڈیمو' : 'Interactive Demo'}
+              </Button>
             </div>
 
             <div className={`flex items-center justify-center gap-2 text-sm text-muted-foreground ${isRTL ? 'flex-row-reverse' : ''}`}>
@@ -74,10 +83,8 @@ export const Hero = () => {
         onSuccess={() => navigate('/dashboard')}
       />
 
-      <DemoWalkthrough 
-        isOpen={demoOpen} 
-        onClose={() => setDemoOpen(false)} 
-      />
+      {/* Interactive Demo Overlay */}
+      {isDemoMode && <DemoOverlay />}
     </>
   );
 };
